@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "0f243730-181b-45b9-8c0e-80b07772e35f",
+		"name": "MAPD713-Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17158940"
+	},
+	"item": [
+		{
+			"name": "Project-getPatients",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/patients",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-getPatient",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/patients/652eb2809c9a2eedb28ad35d",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"patients",
+						"652eb2809c9a2eedb28ad35d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-createPatient",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\": \"Emre\",\n\t\"last_name\": \"Deniz\",\n    \"address\": \"123 Progress Avenue, Toronto, ON\",\n    \"date_of_birth\": \"16/9/1999\",\n    \"department\": \"Cardiology\",\n    \"doctor\": \"Luke White\"\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/patients",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"patients"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
