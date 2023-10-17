@@ -128,3 +128,51 @@ server.get('/patients/:id', function (req, res, next) {
             return next(new Error(JSON.stringify(error.errors)));
         });
 })
+
+//Update the details for a patient
+server.put('/patients/:id', function (req, res, next){
+    console.log('PUT /patients/:id params=>' + JSON.stringify(req.params));
+    console.log('PUT /patients/:id body=>' + JSON.stringify(req.body));
+
+    //validation using the patients model structure
+    if (req.body.first_name === undefined) {
+        return next(new errors.BadRequestError('You did not provide the First Name!!'))
+    }
+    else if (req.body.last_name === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Last Name!!'))
+    }
+    else if (req.body.address === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Home Address!!'))
+    }
+    else if (req.body.date_of_birth === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Date of Birth!!'))
+    }
+    else if (req.body.department === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Department visited!!'))
+    }
+    else if (req.body.doctor === undefined) {
+        return next(new errors.BadRequestError('You did not provide the name of the Doctor attending!!'))
+    }
+    else{
+        PatientsModel
+        .findByIdAndUpdate(
+            {_id:req.params.id}, 
+            {$set:
+                {
+                    first_name:req.body.first_name,
+                    last_name:req.body.last_name,
+                    address:req.body.address,
+                    date_of_birth:req.body.date_of_birth,
+                    department:req.body.department,
+                    doctor:req.body.doctor
+                }
+            })
+        .then((patient)=>{
+            console.log("Updated Patient: " + patient);
+        })
+        .catch((error)=>{
+            console.log("Error Updating the Patient: " + error);
+            return next(new Error(JSON.stringify(error.errors)));
+    });
+    }
+}) 
