@@ -57,12 +57,12 @@ server.get('/patients', function (req, res, next) {
         });
 })
 
-//adding a new patient
+// Adding a new patient
 server.post('/patients', function (req, res, next) {
     console.log('POST /patients params=>' + JSON.stringify(req.params));
     console.log('POST /patients body=>' + JSON.stringify(req.body));
 
-    //validation using the patients model structure
+    // Validation using the patients model structure
     if (req.body.first_name === undefined) {
         return next(new errors.BadRequestError('You did not provide the First Name!!'))
     }
@@ -82,7 +82,7 @@ server.post('/patients', function (req, res, next) {
         return next(new errors.BadRequestError('You did not provide the name of the Doctor attending!!'))
     }
 
-    //create a new patient model from the values entered in the body
+    // Create a new patient model from the values entered in the body
     let newPatient = new PatientsModel({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -92,7 +92,7 @@ server.post('/patients', function (req, res, next) {
         doctor: req.body.doctor
     })
 
-    //save the new patient to the database
+    // Save the new patient to the database
     newPatient.save()
         .then((patient) =>{
             console.log("Saved Patient: " + patient);
@@ -100,7 +100,7 @@ server.post('/patients', function (req, res, next) {
             res.send(201, patient);
             return next();
         })
-        .catch((error)=>{
+        .catch((error)=>{               
             console.log("Error Saving the Patient: " + error);
             return next(new Error(JSON.stringify(error.errors)));
     });
@@ -129,7 +129,7 @@ server.get('/patients/:id', function (req, res, next) {
         });
 })
 
-//Update the details for a patient
+// Update the details for a patient
 server.put('/patients/:id', function (req, res, next){
     console.log('PUT /patients/:id params=>' + JSON.stringify(req.params));
     console.log('PUT /patients/:id body=>' + JSON.stringify(req.body));
@@ -153,7 +153,7 @@ server.put('/patients/:id', function (req, res, next){
     else if (req.body.doctor === undefined) {
         return next(new errors.BadRequestError('You did not provide the name of the Doctor attending!!'))
     }
-    else{
+    else {
         PatientsModel
         .findByIdAndUpdate(
             {_id:req.params.id}, 
@@ -174,6 +174,6 @@ server.put('/patients/:id', function (req, res, next){
         .catch((error)=>{
             console.log("Error Updating the Patient: " + error);
             return next(new Error(JSON.stringify(error.errors)));
-    });
+        });
     }
-}) 
+})
