@@ -1,5 +1,5 @@
 {
-    "name": "CLINIC API",
+    "name": "clinic-api",
     "version": "1.3.0",
     "description": "REST API - MongoDb",
     "main": "index.js",
