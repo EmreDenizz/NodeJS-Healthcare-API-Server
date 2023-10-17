@@ -169,6 +169,7 @@ server.put('/patients/:id', function (req, res, next){
             })
         .then((patient)=>{
             console.log("Updated Patient: " + patient);
+            res.send(200, req.body);
         })
         .catch((error)=>{
             console.log("Error Updating the Patient: " + error);
