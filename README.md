@@ -1,5 +1,5 @@
 # NodeJS-Healthcare-Api-Server
-Healthcare API server in Node using Restify and MongoDB
+Healthcare API server in Node.js using Restify and MongoDB
 
  ### HOW TO RUN:
 1. Install required packages and run HTTP server
@@ -7,7 +7,8 @@ Healthcare API server in Node using Restify and MongoDB
 npm install
 node app.js
 ```
-2. Import  to Postman
-- **getPatients** gets all patients
-- **getPatient** gets one patient
-- **createPatient** adds new patients
+2. Import https://github.com/EmreDenizz/NodeJS-Healthcare-API-Server/blob/main/postman_collection.json to your Postman
+- **createPatient:** adds new patients   
+- **getPatients:** gets all patients
+- **getPatient:** gets one patient
+- **updatePatient:** updates a patient 
