@@ -1,3 +1,11 @@
+//
+//  @group Group 10
+//  @author Emre Deniz (301371047)
+//  @author Muindo Gituku (301372521)
+//  @date 2023-10-17
+//  @description MAPD713 Milestone 2
+//
+
 let SERVER_NAME = 'clinic-api'
 let PORT = 3000;
 let HOST = '127.0.0.1';
