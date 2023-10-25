@@ -11,6 +11,7 @@ let PORT = 3000;
 let HOST = '127.0.0.1';
 
 const mongoose = require ("mongoose");
+const fs = require('fs')
 let uristring = 'mongodb://127.0.0.1:27017/CLINIC';
 
 // Connect to MongoDB
@@ -35,9 +36,13 @@ const patientSchema = new mongoose.Schema({
 let PatientsModel = mongoose.model('patients', patientSchema);
 
 let errors = require('restify-errors');
+const httpsOptions = {
+    key: fs.readFileSync('cert/cert.key'),
+    cert: fs.readFileSync('cert/cert.pem')
+}
 let restify = require('restify')
     // Create the restify server
-    , server = restify.createServer({ name: SERVER_NAME})
+    , server = restify.createServer(httpsOptions, { name: SERVER_NAME})
 
     server.listen(PORT, HOST, function () {
     console.log('Server %s listening at %s', server.name, server.url)
