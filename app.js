@@ -274,6 +274,26 @@ server.get('/patients/:id/tests', function (req, res, next) {
         });
 })
 
+// Delete a test record
+server.del('/patients/:id/tests/:test_id', function (req, res, next) {
+    console.log('DELETE /patients/:id/tests params=>' + JSON.stringify(req.params));
+    // Delete the test in db
+    TestsModel.findOneAndDelete({ _id: req.params.test_id })
+        .then((deletedTest)=>{      
+            console.log("deleted test: " + deletedTest);
+            if(deletedTest){
+                res.send(200, deletedTest);
+            } else {
+                res.send(404, "Test not found");
+            }      
+            return next();
+        })
+        .catch(()=>{
+            console.log("error: " + error);
+            return next(new Error(JSON.stringify(error.errors)));
+        });
+});
+
 // Filter patients by name
 
 // Update test record
