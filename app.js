@@ -294,6 +294,37 @@ server.del('/patients/:id/tests/:test_id', function (req, res, next) {
         });
 });
 
+// Delete patient (first delete all tests, then delete patient)
+server.del('/patients/:id', function (req, res, next) {
+    console.log('DELETE /patients/:id params=>' + JSON.stringify(req.params));
+
+    // Delete tests that belongs to this patient in db
+    TestsModel.deleteMany({ patient_id: req.params.id })
+        .then(()=>{
+            console.log("deleted tests");
+
+            // Delete the patient in db
+            PatientsModel.findOneAndDelete({ _id: req.params.id })
+            .then((deletedTest)=>{      
+                console.log("deleted patient: " + deletedTest);
+                if(deletedTest){
+                    res.send(200, deletedTest);
+                } else {
+                    res.send(404, "Patient not found");
+                }      
+                return next();
+            })
+            .catch(()=>{
+                console.log("error: " + error);
+                return next(new Error(JSON.stringify(error.errors)));
+            });
+        })
+        .catch(()=>{
+            console.log("error: " + error);
+            return next(new Error(JSON.stringify(error.errors)));
+        });
+});
+
 // Filter patients by name
 
 // Update test record
