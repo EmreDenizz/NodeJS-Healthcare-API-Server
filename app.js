@@ -8,7 +8,7 @@
 
 let SERVER_NAME = 'clinic-api'
 let PORT = 3000;
-let HOST = '10.0.0.238';
+let HOST = '127.0.0.1';
 
 const mongoose = require ("mongoose");
 const fs = require('fs')
@@ -249,6 +249,29 @@ server.post('/patients/:id/tests', function (req, res, next) {
             console.log("Error Saving the Test: " + error);
             return next(new Error(JSON.stringify(error.errors)));
     });
+})
+
+// List all test records for the patient
+server.get('/patients/:id/tests', function (req, res, next) {
+    console.log('GET /tests params=>' + JSON.stringify(req.params));
+
+    // Find every tests that belongs to the patient
+    TestsModel.find({ patient_id: req.params.id })
+        .then((tests)=>{
+            console.log("Found tests: " + tests);
+            if (tests) {
+                // Send tests if found
+                res.send(tests)
+            } else {
+                // Send 404 statu code if tests don't exist
+                res.send(404)
+            }
+            return next();
+        })
+        .catch((error)=>{
+            console.log("error: " + error);
+            return next(new Error(JSON.stringify(error.errors)));
+        });
 })
 
 // Filter patients by name
