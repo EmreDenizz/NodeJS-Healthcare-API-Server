@@ -2,13 +2,13 @@
 //  @group Group 10
 //  @author Emre Deniz (301371047)
 //  @author Muindo Gituku (301372521)
-//  @date 2023-10-17
-//  @description MAPD713 Milestone 2
+//  @date Nov 9, 2023
+//  @description MAPD713 Project - Milestone 3
 //
 
 let SERVER_NAME = 'clinic-api'
 let PORT = 3000;
-let HOST = '127.0.0.1';
+let HOST = '10.0.0.238';
 
 const mongoose = require ("mongoose");
 const fs = require('fs')
@@ -32,8 +32,19 @@ const patientSchema = new mongoose.Schema({
     doctor: String
 });
 
-// Compiles the schema into a model, opening (or creating, if nonexistent) the 'patients' collection in the MongoDB database
+// Create test record schema
+const testSchema = new mongoose.Schema({
+    patient_id: String,
+    date: String,
+    nurse_name: String,
+    type: String,
+    category: String,
+    readings: Object
+});
+
+// Compiles schemas into models, opening (or creating, if nonexistent) the 'patients' and 'tests' collections in the MongoDB database
 let PatientsModel = mongoose.model('patients', patientSchema);
+let TestsModel = mongoose.model('tests', testSchema);
 
 let errors = require('restify-errors');
 const httpsOptions = {
@@ -42,7 +53,7 @@ const httpsOptions = {
 }
 let restify = require('restify')
     // Create the restify server
-    , server = restify.createServer(httpsOptions, { name: SERVER_NAME})
+    , server = restify.createServer({ name: SERVER_NAME})
 
     server.listen(PORT, HOST, function () {
     console.log('Server %s listening at %s', server.name, server.url)
@@ -190,3 +201,56 @@ server.put('/patients/:id', function (req, res, next){
         });
     }
 })
+
+// Add test record
+server.post('/patients/:id/tests', function (req, res, next) {
+    console.log('POST /test params=>' + JSON.stringify(req.params));
+    console.log('POST /test body=>' + JSON.stringify(req.body));
+
+    // Validation using the patients model structure
+    if (req.body.patient_id === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Patient ID!!'))
+    }
+    if (req.body.date === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Date!!'))
+    }
+    if (req.body.nurse_name === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Nurse Name!!'))
+    }
+    if (req.body.type === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Type!!'))
+    }
+    if (req.body.category === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Category!!'))
+    }
+    if (req.body.readings === undefined) {
+        return next(new errors.BadRequestError('You did not provide the Readings!!'))
+    }
+
+    // Create a new patient model from the values entered in the body
+    let newTest = new TestsModel({
+        patient_id: req.body.patient_id,
+        date: req.body.date,
+        nurse_name: req.body.nurse_name,
+        type: req.body.type,
+        category: req.body.category,
+        readings: req.body.readings
+    })
+
+    // Save the new test to the database
+    newTest.save()
+        .then((test) =>{
+            console.log("Saved Test: " + test);
+            // Send the patient if no issues
+            res.send(201, test);
+            return next();
+        })
+        .catch((error)=>{               
+            console.log("Error Saving the Test: " + error);
+            return next(new Error(JSON.stringify(error.errors)));
+    });
+})
+
+// Filter patients by name
+
+// Update test record
