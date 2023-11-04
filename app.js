@@ -29,7 +29,8 @@ const patientSchema = new mongoose.Schema({
     address: String,
     date_of_birth: String,
     department: String,
-    doctor: String
+    doctor: String,
+    status: String
 });
 
 // Create test record schema
@@ -113,7 +114,8 @@ server.post('/patients', function (req, res, next) {
         address: req.body.address,
         date_of_birth: req.body.date_of_birth,
         department: req.body.department,
-        doctor: req.body.doctor
+        doctor: req.body.doctor,
+        status: "Normal"
     })
 
     // Save the new patient to the database
@@ -202,7 +204,7 @@ server.put('/patients/:id', function (req, res, next){
     }
 })
 
-// Add test record
+// Add test record & Update patient status
 server.post('/patients/:id/tests', function (req, res, next) {
     console.log('POST /test params=>' + JSON.stringify(req.params));
     console.log('POST /test body=>' + JSON.stringify(req.body));
@@ -237,13 +239,53 @@ server.post('/patients/:id/tests', function (req, res, next) {
         readings: req.body.readings
     })
 
-    // Save the new test to the database
+    // Check if the readings is in a critical status
+    var status = "Normal"
+    var category = req.body.category
+    var readings = req.body.readings
+
+    if(category == "Blood Pressure"){
+        if(readings < 80 || readings > 120){
+            status = "Critical"
+        }
+    }
+    else if(category == "Respiratory Rate"){
+        if(readings < 12 || readings > 18){
+            status = "Critical"
+        }
+    }
+    else if(category == "Blood Oxygen Level"){
+        if(readings < 95 || readings > 100){
+            status = "Critical"
+        }
+    }
+    else if(category == "Heart Beat Rate"){
+        if(readings < 60 || readings > 100){
+            status = "Critical"
+        }
+    }
+
+    // Update status of patient
     newTest.save()
         .then((test) =>{
             console.log("Saved Test: " + test);
-            // Send the patient if no issues
-            res.send(201, test);
-            return next();
+            
+            // Update patient status after inserting new test if required
+            PatientsModel
+                .findByIdAndUpdate(
+                    {_id:req.params.id}, 
+                    {$set:
+                        {
+                            status: status,
+                        }
+                    })
+                .then((patient)=>{
+                    res.send(201, test);
+                })
+                .catch((error)=>{
+                    console.log("Error Updating the Patient: " + error);
+                    return next(new Error(JSON.stringify(error.errors)));
+                });
         })
         .catch((error)=>{               
             console.log("Error Saving the Test: " + error);
@@ -326,5 +368,7 @@ server.del('/patients/:id', function (req, res, next) {
 });
 
 // Filter patients by name
+
+// Filter patients by status
 
 // Update test record
