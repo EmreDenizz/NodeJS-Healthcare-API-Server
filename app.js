@@ -40,7 +40,7 @@ const testSchema = new mongoose.Schema({
   nurse_name: String,
   type: String,
   category: String,
-  readings: Object,
+  readings: Number,
 });
 
 // Compiles schemas into models, opening (or creating, if nonexistent) the 'patients' and 'tests' collections in the MongoDB database
@@ -48,10 +48,10 @@ let PatientsModel = mongoose.model("patients", patientSchema);
 let TestsModel = mongoose.model("tests", testSchema);
 
 let errors = require("restify-errors");
-const httpsOptions = {
-  key: fs.readFileSync("cert/cert.key"),
-  cert: fs.readFileSync("cert/cert.pem"),
-};
+// const httpsOptions = {
+//   key: fs.readFileSync("cert/cert.key"),
+//   cert: fs.readFileSync("cert/cert.pem"),
+// };
 let restify = require("restify"),
   // Create the restify server
   server = restify.createServer({ name: SERVER_NAME });
@@ -404,8 +404,7 @@ server.get("/patients/search/:name", function (req, res, next) {
     "GET /patients/search/:name params=>" + JSON.stringify(req.params)
   );
   let regex = new RegExp(req.params.name, "i");
-  PatientsModel.find({ $or: [{ firstName: regex }, { lastName: regex }] })
-    .exec()
+  PatientsModel.find({ $or: [{ first_name: regex }, { last_name: regex }] })
     .then((results) => {
       console.log("found patients: " + results);
       if (!results || results.length == 0) {
@@ -426,11 +425,8 @@ server.get("/patients/critical", function (req, res, next) {
   console.log("GET /patients/critical");
   const queryObj = { status: "Critical" };
   PatientsModel.find(queryObj)
-    // .sort("date_of_birth")
-    .populate("doctorId", "firstName lastName email phoneNumber")
-    .exec()
     .then((result) => {
-      if (!result) {
+      if (!result || result.length ==0) {
         res.send(404, "No Critical patients Found");
       } else {
         res.json(result);
