@@ -8,7 +8,8 @@
 
 let SERVER_NAME = "clinic-api";
 let PORT = 3000;
-let HOST = "127.0.0.1";
+//let HOST = "127.0.0.1";
+let HOST = "192.168.17.11";
 
 const mongoose = require("mongoose");
 const fs = require("fs");
@@ -160,6 +161,29 @@ server.get("/patients/:id", function (req, res, next) {
         res.send(patient);
       } else {
         // Send 404 statu code if the patient doesn't exist
+        res.send(404);
+      }
+      return next();
+    })
+    .catch((error) => {
+      console.log("error: " + error);
+      return next(new Error(JSON.stringify(error.errors)));
+    });
+});
+
+// Get a single test by id
+server.get("/tests/:id", function (req, res, next) {
+  console.log("GET /tests/:id params=>" + JSON.stringify(req.params));
+
+  // Find a single test by their id in db
+  TestsModel.findOne({ _id: req.params.id })
+    .then((test) => {
+      console.log("Found test: " + test);
+      if (test) {
+        // Send the test if found
+        res.send(test);
+      } else {
+        // Send 404 statu code if the test doesn't exist
         res.send(404);
       }
       return next();
@@ -346,9 +370,9 @@ server.get("/patients/:id/tests", function (req, res, next) {
 });
 
 // Delete a test record
-server.del("/patients/:id/tests/:test_id", function (req, res, next) {
+server.del("/tests/:test_id", function (req, res, next) {
   console.log(
-    "DELETE /patients/:id/tests params=>" + JSON.stringify(req.params)
+    "DELETE /tests params=>" + JSON.stringify(req.params)
   );
   // Delete the test in db
   TestsModel.findOneAndDelete({ _id: req.params.test_id })
