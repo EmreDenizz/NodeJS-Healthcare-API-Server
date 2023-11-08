@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0f243730-181b-45b9-8c0e-80b07772e35f",
-		"name": "Project",
+		"name": "HealthcareAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17158940"
 	},
@@ -20,10 +20,10 @@
 				"url": {
 					"raw": "127.0.0.1:3000/patients",
 					"host": [
-						"127",
+						"10",
 						"0",
 						"0",
-						"1"
+						"238"
 					],
 					"port": "3000",
 					"path": [
@@ -45,17 +45,74 @@
 					}
 				],
 				"url": {
-					"raw": "127.0.0.1:3000/patients/652eb9b3af46030cc7a28d41",
+					"raw": "127.0.0.1:3000/patients/652ee0d82a659a4cb6d29855",
 					"host": [
-						"127",
+						"10",
 						"0",
 						"0",
-						"1"
+						"238"
 					],
 					"port": "3000",
 					"path": [
 						"patients",
-						"652eb9b3af46030cc7a28d41"
+						"652ee0d82a659a4cb6d29855"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-getCriticalPatients",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/patients/critical",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"patients",
+						"critical"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-filterPatientsByName",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/patients/search/Eddie",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"patients",
+						"search",
+						"Eddie"
 					]
 				}
 			},
@@ -74,15 +131,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"first_name\": \"Emre\",\n\t\"last_name\": \"Deniz\",\n    \"address\": \"123 Progress Avenue, Toronto, ON\",\n    \"date_of_birth\": \"16/8/1999\",\n    \"department\": \"Cardiology\",\n    \"doctor\": \"Luke White\"\n}"
+					"raw": "{\n\t\"first_name\": \"Tracey\",\n\t\"last_name\": \"Personal\",\n    \"address\": \"123 Queen Street, Toronto, ON\",\n    \"date_of_birth\": \"16/8/1999\",\n    \"department\": \"Cardiology\",\n    \"doctor\": \"Luke White\"\n}"
 				},
 				"url": {
 					"raw": "127.0.0.1:3000/patients",
 					"host": [
-						"127",
+						"10",
 						"0",
 						"0",
-						"1"
+						"238"
 					],
 					"port": "3000",
 					"path": [
@@ -105,20 +162,188 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"first_name\": \"Emre 2\",\n\t\"last_name\": \"Deniz 2\",\n    \"address\": \"123 Progress Avenue, Toronto, ON 2\",\n    \"date_of_birth\": \"16/8/1998\",\n    \"department\": \"Emergency\",\n    \"doctor\": \"Luke Brown\"\n}"
+					"raw": "{\n    \"first_name\": \"Lisa\",\n    \"last_name\": \"Miles\",\n    \"address\": \"123 Warden Avenue, Toronto, ON\",\n    \"date_of_birth\": \"16/7/1998\",\n    \"department\": \"Neurology\",\n    \"doctor\": \"Melinda Binder\"\n}"
 				},
 				"url": {
-					"raw": "127.0.0.1:3000/patients/652eb9b3af46030cc7a28d41",
+					"raw": "127.0.0.1:3000/patients/652ec257908065efd0e5b792",
 					"host": [
-						"127",
+						"10",
 						"0",
 						"0",
-						"1"
+						"238"
 					],
 					"port": "3000",
 					"path": [
 						"patients",
-						"652eb9b3af46030cc7a28d41"
+						"652ec257908065efd0e5b792"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-deletePatient",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:3000/patients/652ee0d82a659a4cb6d29855",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"patients",
+						"652ee0d82a659a4cb6d29855"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-getTests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/patients/652ee0d82a659a4cb6d29855/tests",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"patients",
+						"652ee0d82a659a4cb6d29855",
+						"tests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-getTest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/tests/654b0d4cac341655e495f181",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"tests",
+						"654b0d4cac341655e495f181"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-createTest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patient_id\": \"652ee0d82a659a4cb6d29855\",\n    \"date\": \"06/11/2023\",\n    \"nurse_name\": \"Megan Jennings\",\n    \"type\": \"Test\",\n    \"category\": \"Blood Pressure\",\n    \"readings\": 70\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/patients/652ee0d82a659a4cb6d29855/tests",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"patients",
+						"652ee0d82a659a4cb6d29855",
+						"tests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-updateTest",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patient_id\": \"652ec257908065efd0e5b792\",\n    \"date\": \"07/11/2023\",\n    \"nurse_name\": \"Megan Jennings\",\n    \"type\": \"Test\",\n    \"category\": \"Blood Pressure\",\n    \"readings\": 79\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/patients/652ec257908065efd0e5b792/tests/654b09bf2b052378b59a2edb",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"patients",
+						"652ec257908065efd0e5b792",
+						"tests",
+						"654b09bf2b052378b59a2edb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project-deleteTest",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:3000/tests/654b0d99ac341655e495f18f",
+					"host": [
+						"10",
+						"0",
+						"0",
+						"238"
+					],
+					"port": "3000",
+					"path": [
+						"tests",
+						"654b0d99ac341655e495f18f"
 					]
 				}
 			},
