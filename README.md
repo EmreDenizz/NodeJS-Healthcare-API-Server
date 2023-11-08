@@ -22,5 +22,4 @@ node app.js
 - **getTestRecord**
 - **createTestRecords**
 - **updateTestRecords**
-- **deleteTestRecords**
-- 
+- **deleteTestRecord**
