@@ -8,8 +8,7 @@
 
 let SERVER_NAME = "clinic-api";
 let PORT = 3000;
-//let HOST = "127.0.0.1";
-let HOST = "192.168.17.11";
+let HOST = "127.0.0.1";
 
 const mongoose = require("mongoose");
 const fs = require("fs");
@@ -20,28 +19,28 @@ mongoose.connect(uristring, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-  console.log("**** Connected to db: " + uristring);
+    console.log("**** Connected to db: " + uristring);
 });
 
 // Create patient schema
 const patientSchema = new mongoose.Schema({
-  first_name: String,
-  last_name: String,
-  address: String,
-  date_of_birth: String,
-  department: String,
-  doctor: String,
-  status: String,
+    first_name: String,
+    last_name: String,
+    address: String,
+    date_of_birth: String,
+    department: String,
+    doctor: String,
+    status: String,
 });
 
 // Create test record schema
 const testSchema = new mongoose.Schema({
-  patient_id: String,
-  date: String,
-  nurse_name: String,
-  type: String,
-  category: String,
-  readings: Number,
+    patient_id: String,
+    date: String,
+    nurse_name: String,
+    type: String,
+    category: String,
+    readings: Number,
 });
 
 // Compiles schemas into models, opening (or creating, if nonexistent) the 'patients' and 'tests' collections in the MongoDB database
@@ -49,13 +48,10 @@ let PatientsModel = mongoose.model("patients", patientSchema);
 let TestsModel = mongoose.model("tests", testSchema);
 
 let errors = require("restify-errors");
-// const httpsOptions = {
-//   key: fs.readFileSync("cert/cert.key"),
-//   cert: fs.readFileSync("cert/cert.pem"),
-// };
+
+// Create the restify server
 let restify = require("restify"),
-  // Create the restify server
-  server = restify.createServer({ name: SERVER_NAME });
+server = restify.createServer({ name: SERVER_NAME });
 
 server.listen(PORT, HOST, function () {
   console.log("Server %s listening at %s", server.name, server.url);
@@ -333,7 +329,7 @@ server.post("/patients/:id/tests", function (req, res, next) {
         }
       )
         .then((patient) => {
-          res.send(201, [test, patient]);
+          res.send(201, test);
         })
         .catch((error) => {
           console.log("Error Updating the Patient: " + error);
@@ -385,7 +381,7 @@ server.del("/tests/:test_id", function (req, res, next) {
       }
       return next();
     })
-    .catch(() => {
+    .catch((error) => {
       console.log("error: " + error);
       return next(new Error(JSON.stringify(error.errors)));
     });
@@ -541,7 +537,7 @@ server.put("/patients/:patientID/tests/:testID", function (req, res, next) {
           }
         )
           .then((patient) => {
-            res.send(201, [test, patient]);
+            res.send(201, test);
           })
           .catch((error) => {
             console.log("Error Updating the Patient: " + error);
