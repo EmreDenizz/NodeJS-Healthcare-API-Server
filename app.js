@@ -8,7 +8,7 @@
 
 let SERVER_NAME = "clinic-api";
 let PORT = 3000;
-let HOST = "192.168.17.3";
+let HOST = "127.0.0.1";
 
 const mongoose = require("mongoose");
 const fs = require("fs");
