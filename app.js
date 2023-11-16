@@ -12,7 +12,12 @@ let HOST = "127.0.0.1";
 
 const mongoose = require("mongoose");
 const fs = require("fs");
-let uristring = "mongodb://127.0.0.1:27017/CLINIC";
+
+// MongoDB Local Database URL
+// let uristring = "mongodb://127.0.0.1:27017/CLINIC";
+
+// MongoDB Atlas Database URL
+let uristring = "mongodb+srv://healthcare-api:zp676ETYQ8c7K2I4@cluster0.koh8le2.mongodb.net/?retryWrites=true&w=majority";
 
 // Connect to MongoDB
 mongoose.connect(uristring, { useNewUrlParser: true });
