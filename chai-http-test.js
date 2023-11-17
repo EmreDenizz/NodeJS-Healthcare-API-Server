@@ -11,13 +11,13 @@ let chaiHttp = require('chai-http');
 let expect = chai.expect;
 chai.use(chaiHttp);
 
-// define base uri for the REST API (lab03) under test
-const uri = 'http://127.0.0.1:3000';
+// Define base uri for the deployed REST API in Render.com
+const api_uri = 'https://nodejs-healthcare-api-server.onrender.com';
 
 // Get all patients
 describe("getPatients -> 'GET' to /patients", function(){
     it("should return list of all patients", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/patients')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -30,7 +30,7 @@ describe("getPatients -> 'GET' to /patients", function(){
 // Get a patient
 describe("getPatient -> 'GET' to /patients:id", function(){
     it("should return the patient", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/patients/652eba48af46030cc7a28d45')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -43,7 +43,7 @@ describe("getPatient -> 'GET' to /patients:id", function(){
 // Filter patients by name
 describe("filterPatientsByName -> 'GET' to patients/search/:name", function(){
     it("should return the patient", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/patients/search/Eddi')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -56,7 +56,7 @@ describe("filterPatientsByName -> 'GET' to patients/search/:name", function(){
 // Filter critical patients
 describe("getCriticalPatients -> 'GET' to /patients/critical", function(){
     it("should return the critical patients", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/patients/critical')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -69,7 +69,7 @@ describe("getCriticalPatients -> 'GET' to /patients/critical", function(){
 // Create a patient
 describe("createPatient -> 'POST' to /patients", function(){
     it("should return response with user created", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .post('/patients')
             .field('first_name', 'John')
             .field('last_name', 'Doe')
@@ -87,7 +87,7 @@ describe("createPatient -> 'POST' to /patients", function(){
 // Check patient created
 describe("checkPatientCreated -> 'GET' to patients/search/:name", function(){
     it("should return the patient", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/patients/search/John')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -100,7 +100,7 @@ describe("checkPatientCreated -> 'GET' to patients/search/:name", function(){
 // Update a patient
 describe("updatePatient -> 'PUT' to /patients", function(){
     it("should return response with user updated", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .put('/patients/652ec257908065efd0e5b792')
             .field('first_name', 'Lisa2')
             .field('last_name', 'Miles')
@@ -118,7 +118,7 @@ describe("updatePatient -> 'PUT' to /patients", function(){
 // Check patient updated
 describe("checkPatientUpdated -> 'GET' to patients/search/:name", function(){
     it("should return the patient", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/patients/search/Lisa2')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -131,8 +131,8 @@ describe("checkPatientUpdated -> 'GET' to patients/search/:name", function(){
 // Delete patient
 describe("deletePatient -> 'DELETE' to patients/", function(){
     it("should return the patient", function(done) {
-        chai.request(uri)
-            .delete('/patients/6556d01151906bb82cea5c34')
+        chai.request(api_uri)
+            .delete('/patients/6556d15651906bb82cea5c4c')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
                 done();
@@ -143,8 +143,8 @@ describe("deletePatient -> 'DELETE' to patients/", function(){
 // Check patient deleted
 describe("checkPatientDeleted -> 'GET' to patients/", function(){
     it("should return status 404", function(done) {
-        chai.request(uri)
-            .get('/patients/6556d01151906bb82cea5c34')
+        chai.request(api_uri)
+            .get('/patients/6556d15651906bb82cea5c4c')
             .end(function(req, res){
                 expect(res.status).to.equal(404);
                 done();
@@ -155,7 +155,7 @@ describe("checkPatientDeleted -> 'GET' to patients/", function(){
 // Get all tests of a patient
 describe("getTests -> 'GET' to /patients/:id/tests", function(){
     it("should return the all tests of the patient", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/patients/652eba48af46030cc7a28d45/tests')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -168,7 +168,7 @@ describe("getTests -> 'GET' to /patients/:id/tests", function(){
 // Get a test
 describe("getTest -> 'GET' to /tests/:id", function(){
     it("should return the all tests a the patient", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/tests/654daeab69f9b38191302b21')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
@@ -180,7 +180,7 @@ describe("getTest -> 'GET' to /tests/:id", function(){
 // Create a test
 describe("createTest -> 'POST' to /patients/:id/tests", function(){
     it("should return response with test created", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .post('/patients/652eba48af46030cc7a28d45/tests')
             .field('patient_id', '652eba48af46030cc7a28d45')
             .field('date', '16/11/2023')
@@ -198,7 +198,7 @@ describe("createTest -> 'POST' to /patients/:id/tests", function(){
 // Update a test
 describe("updateTest -> 'PUT' to /patients/patient_id/tests/test_id", function(){
     it("should return response with test updated", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .put('/patients/652eba48af46030cc7a28d45/tests/654daeab69f9b38191302b21')
             .field('patient_id', '652eba48af46030cc7a28d45')
             .field('date', '16/11/2023')
@@ -216,8 +216,8 @@ describe("updateTest -> 'PUT' to /patients/patient_id/tests/test_id", function()
 // Delete test
 describe("deleteTest -> 'DELETE' to tests/", function(){
     it("should return the patient", function(done) {
-        chai.request(uri)
-            .delete('/tests/654c4bcedec87de8ecc707b9')
+        chai.request(api_uri)
+            .delete('/tests/6556d01251906bb82cea5c3e')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
                 done();
@@ -228,7 +228,7 @@ describe("deleteTest -> 'DELETE' to tests/", function(){
 // Check test deleted
 describe("checkTestDeleted -> 'GET' to tests/", function(){
     it("should return status 404", function(done) {
-        chai.request(uri)
+        chai.request(api_uri)
             .get('/tests/6556c6f451906bb82cea5bfc')
             .end(function(req, res){
                 expect(res.status).to.equal(404);
