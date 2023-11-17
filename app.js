@@ -8,7 +8,10 @@
 
 let SERVER_NAME = "clinic-api";
 let PORT = 3000;
-let HOST = "127.0.0.1";
+// let HOST = "127.0.0.1";
+
+// Render.com host name for web services
+let HOST = "https://nodejs-healthcare-api-server.onrender.com";
 
 const mongoose = require("mongoose");
 const fs = require("fs");
