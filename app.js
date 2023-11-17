@@ -2,16 +2,19 @@
 //  @group Group 10
 //  @author Emre Deniz (301371047)
 //  @author Muindo Gituku (301372521)
-//  @date Nov 9, 2023
-//  @description MAPD713 Project - Milestone 3
+//  @date Nov 30, 2023
+//  @description MAPD713 Project - Milestone 4
 //
 
 let SERVER_NAME = "clinic-api";
-let PORT = 3000;
-// let HOST = "127.0.0.1";
 
-// Render.com host name for web services
-let HOST = "https://nodejs-healthcare-api-server.onrender.com";
+// Localhost host name and port
+let HOST = "127.0.0.1";
+let PORT = 80;
+
+// Render.com host name and port
+// let HOST = "https://nodejs-healthcare-api-server.onrender.com";
+// let PORT = 80;
 
 const mongoose = require("mongoose");
 const fs = require("fs");
