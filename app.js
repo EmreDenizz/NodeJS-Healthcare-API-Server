@@ -5,22 +5,15 @@
 //  @date Nov 30, 2023
 //  @description MAPD713 Project - Milestone 4
 //
-
 let SERVER_NAME = "clinic-api";
-
-// Localhost host name and port
-let HOST = "127.0.0.1";
-let PORT = 80;
-
-// Render.com host name and port
-// let HOST = "https://nodejs-healthcare-api-server.onrender.com";
-// let PORT = 80;
+let PORT = process.env.PORT || 3000;
 
 const mongoose = require("mongoose");
 const fs = require("fs");
 
 // MongoDB Local Database URL
 // let uristring = "mongodb://127.0.0.1:27017/CLINIC";
+// let HOST = "127.0.0.1";
 
 // MongoDB Atlas Database URL
 let uristring = "mongodb+srv://healthcare-api:zp676ETYQ8c7K2I4@cluster0.koh8le2.mongodb.net/?retryWrites=true&w=majority";
@@ -64,7 +57,7 @@ let errors = require("restify-errors");
 let restify = require("restify"),
 server = restify.createServer({ name: SERVER_NAME });
 
-server.listen(PORT, HOST, function () {
+server.listen(PORT, function () {
   console.log("Server %s listening at %s", server.name, server.url);
   console.log("**** Resources: ****");
   console.log(" /patients");
