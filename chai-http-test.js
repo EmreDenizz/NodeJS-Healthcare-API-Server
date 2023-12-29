@@ -1,9 +1,5 @@
 //
-//  @group Group 10
 //  @author Emre Deniz (301371047)
-//  @author Muindo Gituku (301372521)
-//  @date Nov 30, 2023
-//  @description MAPD713 Project - Milestone 4
 //
 
 let chai = require('chai');
@@ -11,8 +7,8 @@ let chaiHttp = require('chai-http');
 let expect = chai.expect;
 chai.use(chaiHttp);
 
-// Define base uri for the deployed REST API in Render.com
-const api_uri = 'https://nodejs-healthcare-api-server.onrender.com';
+// Define base uri for the deployed REST API
+const api_uri = '127.0.0.1:3000';
 
 // Get all patients
 describe("getPatients -> 'GET' to /patients", function(){
@@ -102,7 +98,7 @@ describe("updatePatient -> 'PUT' to /patients", function(){
     it("should return response with user updated", function(done) {
         chai.request(api_uri)
             .put('/patients/652ec257908065efd0e5b792')
-            .field('first_name', 'Lisa2')
+            .field('first_name', 'Lisa')
             .field('last_name', 'Miles')
             .field('address', '1234 Warden Avenue, Toronto, ON')
             .field('date_of_birth', '16/7/1998')
@@ -119,7 +115,7 @@ describe("updatePatient -> 'PUT' to /patients", function(){
 describe("checkPatientUpdated -> 'GET' to patients/search/:name", function(){
     it("should return the patient", function(done) {
         chai.request(api_uri)
-            .get('/patients/search/Lisa2')
+            .get('/patients/search/Lisa')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
                 expect(res.text).not.to.equal('[]');
@@ -132,7 +128,7 @@ describe("checkPatientUpdated -> 'GET' to patients/search/:name", function(){
 describe("deletePatient -> 'DELETE' to patients/", function(){
     it("should return the patient", function(done) {
         chai.request(api_uri)
-            .delete('/patients/6556d15651906bb82cea5c4c')
+            .delete('/patients/655f70eb1899ee771dc75421')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
                 done();
@@ -144,7 +140,7 @@ describe("deletePatient -> 'DELETE' to patients/", function(){
 describe("checkPatientDeleted -> 'GET' to patients/", function(){
     it("should return status 404", function(done) {
         chai.request(api_uri)
-            .get('/patients/6556d15651906bb82cea5c4c')
+            .get('/patients/655f70eb1899ee771dc75421')
             .end(function(req, res){
                 expect(res.status).to.equal(404);
                 done();
@@ -169,7 +165,7 @@ describe("getTests -> 'GET' to /patients/:id/tests", function(){
 describe("getTest -> 'GET' to /tests/:id", function(){
     it("should return the all tests a the patient", function(done) {
         chai.request(api_uri)
-            .get('/tests/654daeab69f9b38191302b21')
+            .get('/tests/6556c9d351906bb82cea5c26')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
                 done();
@@ -199,7 +195,7 @@ describe("createTest -> 'POST' to /patients/:id/tests", function(){
 describe("updateTest -> 'PUT' to /patients/patient_id/tests/test_id", function(){
     it("should return response with test updated", function(done) {
         chai.request(api_uri)
-            .put('/patients/652eba48af46030cc7a28d45/tests/654daeab69f9b38191302b21')
+            .put('/patients/652eba48af46030cc7a28d45/tests/655f70171899ee771dc75416')
             .field('patient_id', '652eba48af46030cc7a28d45')
             .field('date', '16/11/2023')
             .field('nurse_name', 'Megan Jennings')
@@ -217,7 +213,7 @@ describe("updateTest -> 'PUT' to /patients/patient_id/tests/test_id", function()
 describe("deleteTest -> 'DELETE' to tests/", function(){
     it("should return the patient", function(done) {
         chai.request(api_uri)
-            .delete('/tests/6556d01251906bb82cea5c3e')
+            .delete('/tests/655f70171899ee771dc75416')
             .end(function(req, res){
                 expect(res.status).to.equal(200);
                 done();
@@ -229,7 +225,7 @@ describe("deleteTest -> 'DELETE' to tests/", function(){
 describe("checkTestDeleted -> 'GET' to tests/", function(){
     it("should return status 404", function(done) {
         chai.request(api_uri)
-            .get('/tests/6556c6f451906bb82cea5bfc')
+            .get('/tests/655f70171899ee771dc75416')
             .end(function(req, res){
                 expect(res.status).to.equal(404);
                 done();

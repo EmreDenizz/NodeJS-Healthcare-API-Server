@@ -1,22 +1,16 @@
 //
-//  @group Group 10
-//  @author Emre Deniz (301371047)
-//  @author Muindo Gituku (301372521)
-//  @date Nov 30, 2023
-//  @description MAPD713 Project - Milestone 4
+//  @author Emre Deniz
 //
+
 let SERVER_NAME = "clinic-api";
 let PORT = process.env.PORT || 3000;
 
 const mongoose = require("mongoose");
 const fs = require("fs");
 
-// MongoDB Local Database URL
-// let uristring = "mongodb://127.0.0.1:27017/CLINIC";
-// let HOST = "127.0.0.1";
-
-// MongoDB Atlas Database URL
-let uristring = "mongodb+srv://healthcare-api:zp676ETYQ8c7K2I4@cluster0.koh8le2.mongodb.net/?retryWrites=true&w=majority";
+// MongoDB Local Database URL and Host
+let uristring = "mongodb://127.0.0.1:27017/CLINIC";
+let HOST = "127.0.0.1";
 
 // Connect to MongoDB
 mongoose.connect(uristring, { useNewUrlParser: true });
@@ -57,7 +51,7 @@ let errors = require("restify-errors");
 let restify = require("restify"),
 server = restify.createServer({ name: SERVER_NAME });
 
-server.listen(PORT, function () {
+server.listen(PORT, HOST, function () {
   console.log("Server %s listening at %s", server.name, server.url);
   console.log("**** Resources: ****");
   console.log(" /patients");
