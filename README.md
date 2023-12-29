@@ -7,10 +7,13 @@ Healthcare API server in Node.js using Restify and MongoDB
 npm install
 node app.js
 ```
-
-**2.** Import https://github.com/EmreDenizz/NodeJS-Healthcare-API-Server/blob/main/postman_collection.json to your Postman
+**2.** Run Chai unit tests
+```console
+mocha chai-http-test.js
+```
+**3.** Import https://github.com/EmreDenizz/NodeJS-Healthcare-API-Server/blob/main/postman_collection.json to your Postman
    
-**3.** Available methods:
+**4.** Available methods:
 - **getPatients**
 - **getPatient**
 - **getCriticalPatients**
